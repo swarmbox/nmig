@@ -57,12 +57,12 @@ export default async (conversion: Conversion, tableName: string): Promise<void> 
 
     const sqlReservedValues = new Map<string, string>([
         ['CURRENT_DATE', 'CURRENT_DATE'],
-        ['0000-00-00', "'-INFINITY'"],
+        ['0000-00-00', "NULL"], // SwarmBox: use null for Zero-Date
         ['CURRENT_TIME', 'CURRENT_TIME'],
         ['00:00:00', "'00:00:00'"],
         ['CURRENT_TIMESTAMP()', 'CURRENT_TIMESTAMP'],
         ['CURRENT_TIMESTAMP', 'CURRENT_TIMESTAMP'],
-        ['0000-00-00 00:00:00', "'-INFINITY'"],
+        ['0000-00-00 00:00:00', "NULL"], // SwarmBox: use null for Zero-Date
         ['LOCALTIME', 'LOCALTIME'],
         ['LOCALTIMESTAMP', 'LOCALTIMESTAMP'],
         ['NULL', 'NULL'],

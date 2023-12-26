@@ -46,8 +46,13 @@ const isBit = (type: string): boolean => type.indexOf('bit') !== -1;
 /**
  * Defines if given type is one of MySQL date-time types.
  */
+const isDate = (type: string): boolean => type.toLowerCase() === 'date';
+
+/**
+ * Defines if given type is one of MySQL date-time types.
+ */
 const isDateTime = (type: string): boolean =>
-    type.indexOf('timestamp') !== -1 || type.indexOf('date') !== -1;
+    type.indexOf('timestamp') !== -1 || type.indexOf('datetime') !== -1;
 
 /**
  * Defines if given type is one of MySQL numeric types.
@@ -89,8 +94,12 @@ export default (arrTableColumns: any[], mysqlVersion: number, encoding: Encoding
             strRetVal += `HEX(\`${field}\`) AS \`${field}\`,`;
         } else if (isBit(type)) {
             strRetVal += `BIN(\`${field}\`) AS \`${field}\`,`;
+        } else if (isDate(type)) {
+            // SwarmBox: use null for Zero-Date
+            strRetVal += `IF(\`${field}\` = '0000-00-00', null, CAST(\`${field}\` AS CHAR)) AS \`${field}\`,`;
         } else if (isDateTime(type)) {
-            strRetVal += `IF(\`${field}\` IN('0000-00-00', '0000-00-00 00:00:00'), '-INFINITY', CAST(\`${field}\` AS CHAR)) AS \`${field}\`,`;
+            // SwarmBox: use null for Zero-Date
+            strRetVal += `IF(\`${field}\` = '0000-00-00 00:00:00', null, CAST(\`${field}\` AS CHAR)) AS \`${field}\`,`;
         } else if (isNumeric(type)) {
             strRetVal += `\`${field}\` AS \`${field}\`,`;
         } else if (encoding === 'utf-8' || encoding === 'utf8') {
