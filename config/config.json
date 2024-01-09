@@ -14,11 +14,11 @@
     "source" : {
         "host"             : "127.0.0.1",
         "port"             : 3306,
-        "database"         : "test_db",
+        "database"         : "source-database",
         "charset"          : "utf8mb4",
         "supportBigNumbers": true,
-        "user"             : "root",
-        "password"         : "0123456789"
+        "user"             : "source-user",
+        "password"         : "source-password"
     },
 
     "target_description" : [
@@ -31,10 +31,9 @@
     "target" : {
         "host"     : "127.0.0.1",
         "port"     : 5432,
-        "database" : "test_db",
+        "database" : "target-database",
         "charset"  : "UTF8",
-        "user"     : "postgres",
-        "password" : "0123456789"
+        "user"     : "postgres"
     },
 
     "max_each_db_connection_pool_size_description" : [
@@ -43,7 +42,7 @@
         "and 20 connections to the target PostgreSQL server.",
         "40 connections to both servers."
     ],
-    "max_each_db_connection_pool_size" : 20,
+    "max_each_db_connection_pool_size" : 10,
 
     "number_of_simultaneously_running_loader_processes_description": [
         "Number of loader processes that will run simultaneously.",
@@ -79,7 +78,7 @@
         "1. Any positive integer, representing memory limit (in MB).",
         "2. 'DEFAULT', representing V8 default memory limit of your current hardware."
     ],
-    "loader_max_old_space_size" : "DEFAULT",
+    "loader_max_old_space_size" : 8192,
 
     "streams_high_water_mark_description": [
         "Buffer level when stream.write() starts returning false.",
@@ -97,7 +96,7 @@
         "A name of the schema, that will contain all migrated tables.",
         "If not supplied, then a new schema will be created automatically."
     ],
-    "schema" : "public",
+    "schema" : "swarmbox",
 
     "exclude_tables_description": [
         "List (Array) of tables, that will not be migrated.",
@@ -115,7 +114,7 @@
         "In order to skip schema migration, and just migrate data into a preset tables",
         " - set this parameter true."
     ],
-    "migrate_only_data" : false,
+    "migrate_only_data" : true,
 
     "delimiter_description" : [
         "Specifies the character, that separates columns within each record.",

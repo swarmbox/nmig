@@ -200,7 +200,7 @@
 
     "binary" : {
         "increased_size"           : "",
-        "type"                     : "bytea",
+        "type"                     : "uuid",
         "mySqlVarLenPgSqlFixedLen" : true
     },
 
